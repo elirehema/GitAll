@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_1"
+        android:icon="@drawable/tshirt_crew"
+        android:title=""/>
+    <item
+        android:id="@+id/nav_2"
+        android:icon="@drawable/shoe_formal"
+        android:title=""
+        />
+    <item
+        android:id="@+id/nav_3"
+        android:icon="@drawable/diamond"
+        android:title=""/>
+</menu>

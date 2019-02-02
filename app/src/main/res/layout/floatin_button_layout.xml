@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginBottom="@dimen/sp6"
+    android:layout_marginEnd="@dimen/sp6">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonPlaceOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/email_outline"
+        app:fabSize="mini"
+        android:layout_marginTop="@dimen/sp20"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/sp6"
+        app:layout_constraintBottom_toTopOf="@id/buttonCall"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/phone"
+        app:fabSize="mini"
+        android:layout_marginTop="@dimen/sp10"
+        app:layout_constraintBottom_toTopOf="@id/buttonMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/sp6"
+        android:layout_below="@id/buttonPlaceOrder"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/buttonMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:src="@drawable/forum"
+        android:textStyle="bold"
+        app:fabSize="mini"
+        android:layout_marginTop="@dimen/sp10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_below="@id/buttonCall"/>
+
+</android.support.constraint.ConstraintLayout>

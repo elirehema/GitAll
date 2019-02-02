@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12sp"
+    tools:context=".user.editProfile">
+
+    <TextView
+        android:id="@+id/profileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sp6"
+        android:text="Edit Profile "
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.CardView
+
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:elevation="12dp"
+        android:id="@+id/view2"
+        app:cardCornerRadius="40dp"
+        android:layout_centerHorizontal="true"
+        android:innerRadius="0dp"
+        android:shape="ring"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileTitle"
+        android:thicknessRatio="1.9">
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:padding="8sp"
+            android:src="@drawable/img_"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+        </ImageView>
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sp30"
+        android:padding="@dimen/_sp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/profileUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:inputType="text"
+            android:textColor="#000"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sp10"
+        android:padding="@dimen/_sp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputUsername">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/profilePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone"
+            android:inputType="phone"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_sp_10"
+        android:padding="@dimen/_sp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputPhone">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/profileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInpuLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_sp_10"
+        android:padding="@dimen/_sp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputEmail">
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/profileLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sp10"
+        android:hint="Location/Shop"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        app:layout_constraintTop_toBottomOf="@id/textInputEmail" />
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInpuToken"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_sp_10"
+        android:padding="@dimen/_sp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInpuLocation">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/profileToken"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Token "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            app:layout_constraintTop_toBottomOf="@id/textInputEmail" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textWarning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:padding="@dimen/sp6"
+        android:layout_marginTop="@dimen/sp10"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/image_selection_warning"
+        app:layout_constraintTop_toBottomOf="@id/textInpuToken"
+        android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/profileSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryLightColor"
+        android:textColor="#ffffff"
+        android:layout_marginTop="@dimen/_sp_10"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Save"
+        android:textAllCaps="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textWarning"/>
+
+    <TextView
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/camera"
+        app:layout_constraintStart_toEndOf="@id/view2"
+        app:layout_constraintTop_toTopOf="@id/view2"
+        tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+
+</android.support.constraint.ConstraintLayout>
+</ScrollView>

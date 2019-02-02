@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home_outline"
+        android:title="@string/home" />
+
+
+    <item android:title="@string/my_shop">
+        <menu>
+            <item
+                android:id="@+id/nav_viewitems"
+                android:icon="@drawable/store_24_hour"
+                android:title="My Shop list" />
+            <item
+                android:id="@+id/nav_upload"
+                android:icon="@drawable/progress_upload"
+                android:title="Sell new product" />
+            <item
+                android:id="@+id/nav_wish"
+                android:icon="@drawable/format_list_bulleted_type"
+                android:title="My Wish List" />
+
+
+        </menu>
+    </item>
+
+    <item android:title="@string/my_account">
+        <menu>
+
+            <item
+                android:id="@+id/nav_viewprofile"
+                android:icon="@drawable/ic_person"
+                android:title="@string/profile" />
+
+            <item
+                android:id="@+id/nav_editprofile"
+                android:icon="@drawable/account_edit"
+                android:title="Edit profile" />
+        </menu>
+    </item>
+    <item android:title="@string/more">
+        <menu>
+
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/help_circle"
+                android:title="@string/help" />
+            <item
+                android:id="@+id/nav_terms"
+                android:icon="@drawable/ic_search_black_24dp"
+                android:title="@string/terms_features" />
+        </menu>
+    </item>
+
+
+</menu>

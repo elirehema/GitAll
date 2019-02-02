@@ -1,0 +1,64 @@
+{
+  "project_info": {
+    "project_number": "1069495597343",
+    "firebase_url": "https://azaa-84837.firebaseio.com",
+    "project_id": "azaa-84837",
+    "storage_bucket": "azaa-84837.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069495597343:android:82cebc4fd065d33a",
+        "android_client_info": {
+          "package_name": "azaa.android.com.azaa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069495597343-a56ui279rp3n7uqnd8nhan1a1nnqole0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "azaa.android.com.azaa",
+            "certificate_hash": "a16dbb3d202300aca6b42ad015c521cad75c9335"
+          }
+        },
+        {
+          "client_id": "1069495597343-prrl9oa9cfe8q957qfptg2d7o2s65srp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "azaa.android.com.azaa",
+            "certificate_hash": "c44afe935a0e5e5f820019302bc6bc71682078ef"
+          }
+        },
+        {
+          "client_id": "1069495597343-2rke825131e0c4mvsbngcpu940cm681c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8NVlrpe-wyrloMbgdopOni4bHii2a5Sw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069495597343-2rke825131e0c4mvsbngcpu940cm681c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-8221065292634424~1227538494"
+    }
+  ],
+  "configuration_version": "1"
+}

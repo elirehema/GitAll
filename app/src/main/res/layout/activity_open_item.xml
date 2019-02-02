@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.openItem">
+
+    <include
+        android:id="@+id/include"
+        android:visibility="gone"
+        layout="@layout/toolbar"/>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/sp6"
+        app:layout_constraintTop_toBottomOf="@id/include"
+        >
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_sp_10"
+    android:background="#fff">
+
+
+
+    <ImageView
+        android:contentDescription="@string/app_name"
+        android:id="@+id/itemImage"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:src="@drawable/img_5"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Women Sun Glass"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_marginTop="@dimen/sp6"
+        android:textColor="#000"
+        android:padding="@dimen/sp6"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        app:layout_constraintTop_toBottomOf="@id/itemImage"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <TextView
+        android:id="@+id/itemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tsh: 500.00"
+        android:textStyle="bold"
+        android:padding="@dimen/sp6"
+        android:textColor="@color/bg_screen1"
+        android:layout_marginTop="@dimen/sp6"
+        android:layout_marginStart="@dimen/_sp_10"
+        app:layout_constraintTop_toBottomOf="@id/itemImage"
+        app:layout_constraintStart_toEndOf="@id/itemName"
+        />
+
+
+
+    <TextView
+        android:id="@+id/itemShop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shop/Location"
+        android:padding="@dimen/sp6"
+        android:textColor="@color/primaryLightColor"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/itemPrice"
+        app:layout_constraintStart_toStartOf="@id/itemName"
+
+        />
+
+    <TextView
+        android:id="@+id/itemDec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Production Description"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/sp10"
+        android:textColor="@color/primaryLightColor"
+        app:layout_constraintStart_toStartOf="@id/itemName"
+        app:layout_constraintTop_toBottomOf="@id/itemShop"
+        />
+    <TextView
+        android:id="@+id/itemDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/descriptio"
+        android:layout_marginTop="@dimen/sp10"
+        android:layout_marginEnd="@dimen/desc_padding"
+        android:lineSpacingExtra="@dimen/sp6"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemDec"
+        />
+
+    <include
+        layout="@layout/floatin_button_layout"/>
+
+
+</android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

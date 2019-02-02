@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">Ura</string>
+
+    <string name="admob_app_id">ca-app-pub-8221065292634424~1227538494</string>
+    <string name="banner_home_footer">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="interstitial_full_screen">ca-app-pub-XXXXXXXX~XXXXXXXXXXX</string>
+    <string name="rewarded_video">ca-app-pub-XXXXXXXX~XXXXXXXXXXX</string>
+    <string name="default_title">Skagway Slip-On Back</string>
+    <string name="default_extra_title">Night Wear</string>
+    <string name="default_price">$2000.00 usd</string>
+    <string name="default_descritpion">White Cotton, available in varioulivery</string>
+    <string name="image_title">Product Name</string>
+    <string name="price">Price</string>
+    <string name="phone">Phone</string>
+    <string name="_description">Description max (50 words)</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Search Hint</string>
+    <string name="descriptio">White Cotton, available in </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="terms_features">Terms</string>
+    <string name="help">Help</string>
+    <string name="app_upto_date">Application is Up to date</string>
+    <string name="update_message">Please Update your Application</string>
+    <string name="update_now">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="msg_token_fmt">1234</string>
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Hello Food!</string>
+    <string name="slide_1_desc">Supportive shoes for women , forcing you to choose between comfort and appearance.</string>
+
+    <string name="slide_2_title">Free Advertise</string>
+    <string name="slide_2_desc">Leather offers durability out.</string>
+
+    <string name="slide_3_title">Pay On Delivery</string>
+    <string name="slide_3_desc">Watches Simple Fashion Wrist Watches Waterproof Men and Ladies Watch Clock</string>
+
+    <string name="slide_4_title">Free Delivery</string>
+    <string name="slide_4_desc">Elegance is when the inside is as beautiful as outside...</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+    <string name="_350">Tsh 3,500</string>
+    <string name="informed"></string>
+    <string name="image_selection_warning">Please! Select profile image to enable saving </string>
+    <string name="s_item_name">Item Name</string>
+    <string name="s_tsh_5000">Tsh 5000</string>
+    <string name="shop_now">Shop Now</string>
+    <string name="home">Home</string>
+    <string name="general">General</string>
+    <string name="my_account">My Account</string>
+    <string name="profile">Profile</string>
+    <string name="my_shop">My Shop</string>
+    <string name="navigation_drawer_open">Drawer Opened</string>
+    <string name="more">More</string>
+
+</resources>

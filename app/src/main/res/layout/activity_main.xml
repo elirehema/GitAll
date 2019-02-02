@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:gravity="start"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/primaryLightColor"
+        android:minHeight="?attr/actionBarSize"
+        app:titleTextColor="#000000">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#fff"
+            android:textStyle="bold"/>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primaryLightColor"
+                android:contextClickable="true"
+                android:focusable="true"
+                android:minHeight="27dp"
+                app:tabSelectedTextColor="@color/secondaryColor"
+                app:tabTextAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                app:tabTextColor="@color/secondaryTextColor" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="48dp"/>
+        </FrameLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/primaryLightColor"
+            android:clickable="true"
+            android:focusable="true"
+            android:fitsSystemWindows="true"
+            android:soundEffectsEnabled="true"
+            app:itemTextColor="@color/primaryTextColor"
+            app:menu="@menu/navigation_menu" />
+
+
+    </android.support.v4.widget.DrawerLayout>
+</RelativeLayout>
+
