@@ -1,7 +1,7 @@
 package azaa.android.com.azaa.roomApi.database;
 
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.Context;
 
 public class DatabaseClient {

@@ -19,7 +19,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
-import android.support.design.widget.TextInputEditText;
+import com.google.android.material.textfield.TextInputEditText;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;

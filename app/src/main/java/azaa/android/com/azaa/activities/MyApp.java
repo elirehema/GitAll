@@ -1,11 +1,10 @@
 package azaa.android.com.azaa.activities;
 
 import android.app.Application;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
 
-import azaa.android.com.azaa.R;
 import io.fabric.sdk.android.Fabric;
 
 /**

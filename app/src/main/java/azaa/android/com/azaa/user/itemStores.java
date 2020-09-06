@@ -2,11 +2,11 @@ package azaa.android.com.azaa.user;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,8 +18,6 @@ import java.util.List;
 
 import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.activities.upload;
-import azaa.android.com.azaa.adapters.Item;
-import azaa.android.com.azaa.adapters.ItemsAdapter;
 import azaa.android.com.azaa.adapters.shopAdapter;
 import azaa.android.com.azaa.database.databaseOperations;
 import azaa.android.com.azaa.model.Product;
@@ -29,8 +27,6 @@ import azaa.android.com.azaa.roomApi.shoAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static java.security.AccessController.getContext;
 
 public class itemStores extends AppCompatActivity  {
     List<Product> productList = new ArrayList<>();

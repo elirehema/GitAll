@@ -1,8 +1,8 @@
 package azaa.android.com.azaa.roomApi.database;
 
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 import azaa.android.com.azaa.roomApi.Dao.productDao;
 import azaa.android.com.azaa.roomApi.entity.eProduct;
