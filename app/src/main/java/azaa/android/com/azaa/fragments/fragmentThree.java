@@ -5,11 +5,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,20 +22,15 @@ import java.util.List;
 
 import azaa.android.com.azaa.adapters.Item;
 import azaa.android.com.azaa.adapters.ItemsAdapter;
-import azaa.android.com.azaa.adapters.itemsAdapter;
 import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.asynctasks.backgroundAsync;
 import azaa.android.com.azaa.model.Product;
 import azaa.android.com.azaa.rest.ApiClient;
 import azaa.android.com.azaa.rest.ApiInterface;
-import azaa.android.com.azaa.rest.ProductsResult;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
 
 import static azaa.android.com.azaa.network.constants.SPANCOUNT;
 

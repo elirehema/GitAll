@@ -23,7 +23,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build --debug
     - name: Android Github Action
       uses: Vukan-Markovic/Github-Android-Action@1.2
 

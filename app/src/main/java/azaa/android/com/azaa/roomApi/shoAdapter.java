@@ -2,7 +2,7 @@ package azaa.android.com.azaa.roomApi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import azaa.android.com.azaa.R;
-import azaa.android.com.azaa.activities.MainActivity;
 import azaa.android.com.azaa.activities.openItem;
 import azaa.android.com.azaa.adapters.GlideApp;
 import azaa.android.com.azaa.roomApi.entity.eProduct;
