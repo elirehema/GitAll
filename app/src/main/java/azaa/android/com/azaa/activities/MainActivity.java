@@ -6,43 +6,44 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.net.Uri;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.core.view.GravityCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.crashlytics.android.Crashlytics;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.UpdateClasses.GooglePlayStoreAppVersionNameLoader;
 import azaa.android.com.azaa.UpdateClasses.WSCallerVersionListener;
 import azaa.android.com.azaa.activities.transformer.BackgroundToForegroundTransformer;
-import azaa.android.com.azaa.fragments.*;
+import azaa.android.com.azaa.fragments.fragmentFour;
+import azaa.android.com.azaa.fragments.fragmentOne;
+import azaa.android.com.azaa.fragments.fragmentThree;
+import azaa.android.com.azaa.fragments.fragmentTwo;
 import azaa.android.com.azaa.network.Config;
 import azaa.android.com.azaa.user.editProfile;
 import azaa.android.com.azaa.user.itemStores;
 import azaa.android.com.azaa.user.viewProfile;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
-import java.util.ArrayList;
-import java.util.List;
-
-import azaa.android.com.azaa.R;
 
 import static azaa.android.com.azaa.network.Config.HELP_URL;
-
 import static azaa.android.com.azaa.network.Config.MY_PREFS_NAME;
 import static azaa.android.com.azaa.network.Config.TERMS_URL;
 
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -324,11 +324,7 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
     }
 
     private void logUser() {
-        // TODO: Use the current user's information
-        // You can call any combination of these three methods
-        Crashlytics.setUserIdentifier("12345");
-        Crashlytics.setUserEmail("user@fabric.io");
-        Crashlytics.setUserName("Test User");
+
     }
 
     /**
