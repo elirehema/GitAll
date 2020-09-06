@@ -1,4 +1,4 @@
-# Ura
+# Ura ![Android CI](https://github.com/elirehema/Ura/workflows/Android%20CI/badge.svg)
 This README would normally document whatever steps are necessary to get your application up and running.
 
 ### What is this repository for? ###
