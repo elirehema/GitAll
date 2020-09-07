@@ -18,9 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ShareEvent;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -159,12 +156,6 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
                     myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                     myIntent.putExtra(Intent.EXTRA_TEXT, shareBody.toString());
                     context.startActivity(Intent.createChooser(myIntent, "Share Via"));
-                    Answers.getInstance().logShare(new ShareEvent()
-                            .putMethod("Share")
-                            .putContentName(current.getProductName())
-                            .putContentType(current.getProductType())
-                            .putContentId("60107305"));
-
                     break;
                 case R.id.textItemLike:
                     updateStatus();

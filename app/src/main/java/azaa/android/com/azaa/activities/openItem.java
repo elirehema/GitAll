@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
 
 import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.user.editProfile;
@@ -70,10 +68,6 @@ public class openItem extends AppCompatActivity {
         itemPrice.setText(price);
         itemDesc.setText(desc);
 
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName(name)
-                .putContentType(category)
-                .putContentId("article-350"));
 
         String imageUrl = IMAGE_URL + this.getIntent().getStringExtra("image");
         RequestOptions requestOptions = new RequestOptions();
