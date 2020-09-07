@@ -25,8 +25,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.LevelStartEvent;
 
 public class welcome extends AppCompatActivity {
 
@@ -229,9 +227,6 @@ public class welcome extends AppCompatActivity {
     }
 
     public void notifyLaunch(){
-        Answers.getInstance().logLevelStart(new LevelStartEvent()
-                .putLevelName("Level 2A")
-                .putCustomAttribute("Launch", "ura launch")
-                .putCustomAttribute("Custom Number", 25));
+
     }
 }

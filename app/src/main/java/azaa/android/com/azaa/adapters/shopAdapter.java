@@ -13,10 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ShareEvent;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -151,11 +147,6 @@ public class shopAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
                     myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                     myIntent.putExtra(Intent.EXTRA_TEXT, shareBody.toString());
                     context.startActivity(Intent.createChooser(myIntent, "Share Via"));
-                    Answers.getInstance().logShare(new ShareEvent()
-                            .putMethod("Share")
-                            .putContentName(current.getProductName())
-                            .putContentType(current.getProductType())
-                            .putContentId("60107305"));
 
                     break;
             }
