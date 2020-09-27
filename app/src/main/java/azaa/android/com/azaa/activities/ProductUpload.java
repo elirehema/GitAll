@@ -19,6 +19,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -34,12 +37,16 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import azaa.android.com.azaa.adapters.MySingleton;
 import azaa.android.com.azaa.R;
@@ -52,17 +59,18 @@ import static azaa.android.com.azaa.network.Config.MY_PREFS_NAME;
 import static azaa.android.com.azaa.network.Config.UPLOAD_URL;
 
 
-public class upload extends Activity implements AdapterView.OnItemSelectedListener{
-
+public class ProductUpload extends Activity implements AdapterView.OnItemSelectedListener{
+    public static final String TAG = "ProductUploadActivity";
+    FirebaseFirestore db;
     @BindView(R.id.btnUpload) Button uploadImage;
     @BindView(R.id.btn_pick) Button pickImage;
     private final int SELECT_PHOTO = 1;
-    @BindView(R.id.imageView)
+    @BindView(R.id.image)
     ImageView imageView;
 
-    @BindView(R.id.imageTitle) TextInputEditText itemTitle;
-    @BindView(R.id.imagePrice) TextInputEditText  itemPrice;
-    @BindView(R.id.imageDesc) TextInputEditText itemDesc;
+    @BindView(R.id.text_image_title) TextInputEditText itemTitle;
+    @BindView(R.id.text_price) TextInputEditText  itemPrice;
+    @BindView(R.id.text_description) TextInputEditText itemDesc;
     private Bitmap selectedImage;
     private String item,category;
     String itemName;
@@ -78,6 +86,7 @@ public class upload extends Activity implements AdapterView.OnItemSelectedListen
         setContentView(R.layout.activity_upload_image);
         ButterKnife.bind(this);
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        db = FirebaseFirestore.getInstance();
 
         Intent intent = getIntent();
         String action = intent.getAction();
@@ -88,7 +97,6 @@ public class upload extends Activity implements AdapterView.OnItemSelectedListen
 
         imageView.setVisibility(View.GONE);
         uploadImage.setVisibility(View.GONE);
-
         itemTitle.setVisibility(View.GONE);
 
         uploadImage.setOnClickListener(new OnClickListener() {
@@ -102,7 +110,7 @@ public class upload extends Activity implements AdapterView.OnItemSelectedListen
                 }else if (TextUtils.isEmpty(itemDesc.getText())){
                     itemDesc.setError("Description Required!");
                 }else {
-                    new AsyncFetch().execute();
+                   uploadProductToFireStore();
                 }
             }
         });
@@ -166,100 +174,35 @@ public class upload extends Activity implements AdapterView.OnItemSelectedListen
         this.finish();
     }
 
-    private class AsyncFetch extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            imageView.setImageResource(0);
-            imageView.setVisibility(View.INVISIBLE);
-            uploadImage.setVisibility(View.INVISIBLE);
-            pickImage.setText("Select Image");
 
-            super.onPreExecute();
-        }
+    private void uploadProductToFireStore(){
+        eProduct product = new eProduct();
+        product.setLiked("3");
+        product.setType(category);
+        product.setMail("email@example.com");
+        product.setDesc(itemDesc.getText().toString().trim().toLowerCase());
+        product.setContacts("3291830192");
+        product.setImage(itemName);
+        product.setName(itemTitle.getText().toString());
+        product.setLocation("Dar es Salaam");
+        product.setPrice(itemPrice.getText().toString().trim());
+        product.setItemId(itemName);
 
-        @Override
-        protected String doInBackground(String... strings) {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    NetworkResponse errorRes = error.networkResponse;
-                    String stringData = "";
-                    if(errorRes != null && errorRes.data != null){
-                        try {
-                            stringData = new String(errorRes.data,"UTF-8");
-                            //progressBar.setVisibility(View.GONE);
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
+        //adding to database
+        db.collection("products")
+                .add(product)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
-                            //Toast.makeText(upload.this,imageToString(selectedImage),Toast.LENGTH_LONG).show();
-                            //Log.d("Image Error",imageToString(selectedImage));
-                        }
-                    }else{
-                        //progressBar.setVisibility(View.GONE);
                     }
-                    Log.e("Error",stringData);
-                    //Toast.makeText(upload.this,imageToString(selectedImage),Toast.LENGTH_LONG).show();
-                    Log.d("Image Error",imageToString(selectedImage));
-                }
-            })
-
-            {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> params = new HashMap<>();
-
-
-                    String s = prefs.getString("location",null);
-                    String mLocation = s;
-                    itemName  = System.currentTimeMillis()+".png";
-
-
-                    params.put("desc",itemDesc.getText().toString());
-                    params.put("image",itemName);
-                    params.put("photo",imageToString(selectedImage));
-                    params.put("title",itemTitle.getText().toString().trim());
-                    params.put("email",prefs.getString("email",null));
-                    params.put("contact",prefs.getString("phone",null));
-                    params.put("price",itemPrice.getText().toString().trim());
-                    params.put("token",prefs.getString("token",null));
-                    params.put("location",mLocation);
-                    params.put("category",category);
-
-                    eProduct product = new eProduct();
-                    product.setLiked("3");
-                    product.setType(category);
-                    product.setMail(prefs.getString("email",null));
-                    product.setDesc(itemDesc.getText().toString().trim().toLowerCase());
-                    product.setContacts(prefs.getString("phone",null));
-                    product.setImage(itemName);
-                    product.setName(itemTitle.getText().toString());
-                    product.setLocation(prefs.getString("location",null));
-                    product.setPrice(itemPrice.getText().toString().trim());
-                    product.setItemId(itemName);
-
-                    //adding to database
-
-                    DatabaseClient.getmInstance(getApplicationContext()).getAppDatabase()
-                            .productDao()
-                            .insert(product);
-
-                    return params;
-                }
-            };
-            MySingleton.getmInstance(upload.this).addToRequestQueue(stringRequest);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            Toast.makeText(getBaseContext(),"Uploading in Background",Toast.LENGTH_LONG).show();
-        }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Error adding document", e);
+            }
+        });
     }
 
     private String imageToString(Bitmap bitmap)
