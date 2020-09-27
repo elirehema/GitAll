@@ -111,6 +111,7 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessaging"
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCore"
     implementation "com.google.firebase:firebase-analytics:$rootProject.firebaseAnalytics"
+    implementation 'com.google.firebase:firebase-firestore:21.6.0'
 
 
 }

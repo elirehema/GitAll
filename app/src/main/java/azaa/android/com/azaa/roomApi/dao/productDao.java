@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.roomApi.Dao;
+package azaa.android.com.azaa.roomApi.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

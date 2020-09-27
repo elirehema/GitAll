@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import azaa.android.com.azaa.R;
-import azaa.android.com.azaa.activities.upload;
+import azaa.android.com.azaa.activities.ProductUpload;
 import azaa.android.com.azaa.adapters.shopAdapter;
 import azaa.android.com.azaa.database.databaseOperations;
 import azaa.android.com.azaa.model.Product;
@@ -142,6 +142,6 @@ public class itemStores extends AppCompatActivity  {
     }
     @OnClick(R.id.store_add)
     public void add(){
-        startActivity(new Intent(getApplicationContext(),upload.class));
+        startActivity(new Intent(getApplicationContext(), ProductUpload.class));
     }
 }

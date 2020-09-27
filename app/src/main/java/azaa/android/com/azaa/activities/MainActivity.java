@@ -148,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
     }
 
 
-
     private void configureToolBar() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -181,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
     }
-
 
 
     @Override
@@ -234,9 +232,9 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
 
 
                 switch (itemId) {
-                    case  R.id.nav_home:
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    break;
+                    case R.id.nav_home:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
                     case R.id.nav_help:
                         intent.putExtra("link", HELP_URL);
                         startActivity(intent);
@@ -253,32 +251,23 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
                         break;
                     case R.id.nav_viewitems:
                         Intent intent1 = new Intent(getApplicationContext(), itemStores.class);
-                        intent1.putExtra("id","3");
-                        intent1.putExtra("title","My Store");
+                        intent1.putExtra("id", "3");
+                        intent1.putExtra("title", "My Store");
                         startActivity(intent1);
                         break;
                     case R.id.nav_wish:
                         Intent inten_t = new Intent(getApplicationContext(), itemStores.class);
-                        inten_t.putExtra("id","1");
-                        inten_t.putExtra("title","MY WISH LIST");
+                        inten_t.putExtra("id", "1");
+                        inten_t.putExtra("title", "MY WISH LIST");
                         startActivity(inten_t);
                         break;
                     case R.id.nav_upload:
-                        prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-                        phone = prefs.getString("phone", null);
-                        location = prefs.getString("location", null);
-                        name = prefs.getString("name", null);
-                        email = prefs.getString("email", null);
-                        if ((phone == null) || (location == null) || (name == null) || (email == null)) {
-                            startActivity(new Intent(getApplicationContext(), editProfile.class));
-                        } else {
-                            startActivity(new Intent(getApplicationContext(), upload.class));
-                        }
+                        startActivity(new Intent(getApplicationContext(), ProductUpload.class));
                         break;
 
                 }
                 toolbar.setNavigationIcon(R.drawable.dots_vertical);
-                isOpen=0;
+                isOpen = 0;
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
