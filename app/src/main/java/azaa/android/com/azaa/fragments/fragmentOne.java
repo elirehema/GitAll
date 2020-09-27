@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +18,13 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +35,7 @@ import azaa.android.com.azaa.asynctasks.backgroundAsync;
 import azaa.android.com.azaa.model.Product;
 import azaa.android.com.azaa.rest.ApiClient;
 import azaa.android.com.azaa.rest.ApiInterface;
+import azaa.android.com.azaa.roomApi.entity.eProduct;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -36,6 +45,7 @@ import static azaa.android.com.azaa.network.constants.SPANCOUNT;
 
 @SuppressLint("ValidFragment")
 public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+    public static final String TAG = "Fragment";
     private List<Item> data = new ArrayList<>();
     private String id, title, contact, price, desc, image, email,type,location,t_Name;
     private ItemsAdapter itemsAdapter;
@@ -127,25 +137,30 @@ public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefres
 
     public void getdaTa(){
         progressBar.setVisibility(View.VISIBLE);
-        ApiInterface apiInterface= ApiClient.getInstance().create(ApiInterface.class);
-        apiInterface.getAllWear("w").enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
-                datalist = response.body();
-
-                List<Product> products = response.body();
-                recyclerView.setAdapter(new ItemsAdapter(products,getContext()));
-                progressBar.setVisibility(View.GONE);
-
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("products")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<Product> products = new ArrayList<>();
 
 
-            }
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                Log.d("TAG","Response = "+t.toString());
-                progressBar.setVisibility(View.GONE);
-            }
-        });
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Product po = document.toObject(Product.class);
+                                products.add(po);
+                                Log.d(TAG, po.getProductPrice());
+                               // Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                            recyclerView.setAdapter(new ItemsAdapter(products,getContext()));
+                            progressBar.setVisibility(View.GONE);
+                        } else {
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
     }
     public void excuteAsyc(){
         backgroundAsync async = new backgroundAsync(getContext());

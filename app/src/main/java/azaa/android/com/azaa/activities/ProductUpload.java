@@ -57,6 +57,7 @@ import com.google.firebase.storage.UploadTask;
 
 import azaa.android.com.azaa.adapters.MySingleton;
 import azaa.android.com.azaa.R;
+import azaa.android.com.azaa.model.Product;
 import azaa.android.com.azaa.roomApi.database.DatabaseClient;
 import azaa.android.com.azaa.roomApi.entity.eProduct;
 import azaa.android.com.azaa.util.Constants;
@@ -191,17 +192,15 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
 
 
     private void uploadProductToFireStore() {
-        eProduct product = new eProduct();
-        product.setLiked("3");
-        product.setType(category);
-        product.setMail("email@example.com");
-        product.setDesc(itemDesc.getText().toString().trim().toLowerCase());
-        product.setContacts("3291830192");
-
-        product.setName(itemTitle.getText().toString());
-        product.setLocation("Dar es Salaam");
-        product.setPrice(itemPrice.getText().toString().trim());
-        product.setItemId(itemName);
+        Product product = new Product();
+        product.setProductType(category);
+        product.setProductEmail("email@example.com");
+        product.setProductDescription(itemDesc.getText().toString().trim());
+        product.setProductContacts("3291830192");
+        product.setProductName(itemTitle.getText().toString());
+        product.setProductLocation("Dar es Salaam");
+        product.setProductPrice(itemPrice.getText().toString().trim());
+        product.setProductId(itemName);
         if (imageUri != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading image ...");
@@ -213,7 +212,7 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
-                    product.setImage(storageReference.getName());
+                    product.setProductImage(storageReference.getName());
                     //adding to database
                     db.collection("products")
                             .add(product)
