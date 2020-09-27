@@ -112,6 +112,7 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$rootProject.firebaseCore"
     implementation "com.google.firebase:firebase-analytics:$rootProject.firebaseAnalytics"
     implementation 'com.google.firebase:firebase-firestore:21.6.0'
+    implementation 'com.google.firebase:firebase-storage:19.2.0'
 
 
 }

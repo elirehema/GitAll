@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -23,6 +25,7 @@ import android.provider.MediaStore;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -30,6 +33,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,11 +51,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import azaa.android.com.azaa.adapters.MySingleton;
 import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.roomApi.database.DatabaseClient;
 import azaa.android.com.azaa.roomApi.entity.eProduct;
+import azaa.android.com.azaa.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -59,24 +67,31 @@ import static azaa.android.com.azaa.network.Config.MY_PREFS_NAME;
 import static azaa.android.com.azaa.network.Config.UPLOAD_URL;
 
 
-public class ProductUpload extends Activity implements AdapterView.OnItemSelectedListener{
+public class ProductUpload extends Activity implements AdapterView.OnItemSelectedListener {
     public static final String TAG = "ProductUploadActivity";
     FirebaseFirestore db;
-    @BindView(R.id.btnUpload) Button uploadImage;
-    @BindView(R.id.btn_pick) Button pickImage;
+    StorageReference storageReference;
+    @BindView(R.id.btnUpload)
+    Button uploadImage;
+    @BindView(R.id.btn_pick)
+    Button pickImage;
     private final int SELECT_PHOTO = 1;
     @BindView(R.id.image)
     ImageView imageView;
 
-    @BindView(R.id.text_image_title) TextInputEditText itemTitle;
-    @BindView(R.id.text_price) TextInputEditText  itemPrice;
-    @BindView(R.id.text_description) TextInputEditText itemDesc;
+    @BindView(R.id.text_image_title)
+    TextInputEditText itemTitle;
+    @BindView(R.id.text_price)
+    TextInputEditText itemPrice;
+    @BindView(R.id.text_description)
+    TextInputEditText itemDesc;
     private Bitmap selectedImage;
-    private String item,category;
+    private String item, category;
     String itemName;
     SharedPreferences prefs;
     //private ProgressBar progressBar;
     private Uri imageUri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,15 +117,15 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
         uploadImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( TextUtils.isEmpty(itemTitle.getText())){
-                    itemTitle.setError( "Title Required!" );
+                if (TextUtils.isEmpty(itemTitle.getText())) {
+                    itemTitle.setError("Title Required!");
 
-                }else if (TextUtils.isEmpty(itemPrice.getText())){
+                } else if (TextUtils.isEmpty(itemPrice.getText())) {
                     itemPrice.setError("Price Required!");
-                }else if (TextUtils.isEmpty(itemDesc.getText())){
+                } else if (TextUtils.isEmpty(itemDesc.getText())) {
                     itemDesc.setError("Description Required!");
-                }else {
-                   uploadProductToFireStore();
+                } else {
+                    uploadProductToFireStore();
                 }
             }
         });
@@ -140,9 +155,9 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
             case SELECT_PHOTO:
                 if (resultCode == RESULT_OK && imageReturnedIntent != null) {
                     try {
-                        imageUri  = imageReturnedIntent.getData();
+                        imageUri = imageReturnedIntent.getData();
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        selectedImage  = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+                        selectedImage = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                         imageView.setVisibility(View.VISIBLE);
                         uploadImage.setVisibility(View.VISIBLE);
                         imageView.setImageBitmap(selectedImage);
@@ -156,7 +171,7 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
                         e.printStackTrace();
                     }
 
-                }else {
+                } else {
                     this.finish();
                 }
 
@@ -175,66 +190,88 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
     }
 
 
-    private void uploadProductToFireStore(){
+    private void uploadProductToFireStore() {
         eProduct product = new eProduct();
         product.setLiked("3");
         product.setType(category);
         product.setMail("email@example.com");
         product.setDesc(itemDesc.getText().toString().trim().toLowerCase());
         product.setContacts("3291830192");
-        product.setImage(itemName);
+
         product.setName(itemTitle.getText().toString());
         product.setLocation("Dar es Salaam");
         product.setPrice(itemPrice.getText().toString().trim());
         product.setItemId(itemName);
+        if (imageUri != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading image ...");
+            progressDialog.show();
+            storageReference = FirebaseStorage.getInstance().getReference(Constants.DATABASE_PATH_UPLOADS).child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+            UploadTask uploadTask = storageReference.putFile(imageUri);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                    product.setImage(storageReference.getName());
+                    //adding to database
+                    db.collection("products")
+                            .add(product)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
 
-        //adding to database
-        db.collection("products")
-                .add(product)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+                }
+            });
+        }
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w(TAG, "Error adding document", e);
-            }
-        });
+
     }
 
-    private String imageToString(Bitmap bitmap)
-    {
+    public String getFileExtension(Uri uri) {
+        ContentResolver cR = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private String imageToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-        byte [] imgByte = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(imgByte,Base64.DEFAULT);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imgByte = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgByte, Base64.DEFAULT);
     }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
         item = parent.getItemAtPosition(i).toString();
-        switch (item){
+        switch (item) {
             case "Clothes":
-                category="w";
+                category = "w";
                 break;
             case "Shoes":
-                category="v";
+                category = "v";
                 break;
             case "Jewellery":
-                category="j";
+                category = "j";
                 break;
             case "MobilePhones":
-                category="p";
+                category = "p";
                 break;
         }
 
         // Showing selected spinner item
-        if (item.equals("Category")){
+        if (item.equals("Category")) {
             uploadImage.setEnabled(false);
-            Toast.makeText(parent.getContext(), "Select Category" , Toast.LENGTH_LONG).show();
-            Log.d("IMAGE STRING",imageToString(selectedImage));
+            Toast.makeText(parent.getContext(), "Select Category", Toast.LENGTH_LONG).show();
+            Log.d("IMAGE STRING", imageToString(selectedImage));
         } else {
             uploadImage.setEnabled(true);
             Toast.makeText(parent.getContext(), "You have Selected: " + item, Toast.LENGTH_LONG).show();
@@ -245,7 +282,8 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-    public void setSpinnerAdapter(){
+
+    public void setSpinnerAdapter() {
         Spinner spinner = (Spinner) findViewById(R.id.spinnerCategory);
 
         // Spinner click listener
@@ -260,7 +298,6 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
         categories.add("MobilePhones");
 
 
-
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
 
@@ -270,10 +307,6 @@ public class ProductUpload extends Activity implements AdapterView.OnItemSelecte
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
     }
-
-
-
-
 
 
 }

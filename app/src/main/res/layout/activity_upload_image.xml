@@ -24,6 +24,7 @@
                 android:id="@+id/text_image_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/image_title"
                 android:hint="@string/image_title"
                 android:inputType="text"
                 android:maxLength="15" />
@@ -41,6 +42,7 @@
                 android:id="@+id/text_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/descriptio"
                 android:hint="@string/_description"
                 android:inputType="text"
                 android:maxLength="500" />
@@ -61,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_description"
+                android:text="20000"
                 android:hint="@string/price"
                 android:inputType="numberDecimal"
                 android:maxLength="13" />
