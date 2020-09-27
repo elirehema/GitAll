@@ -8,8 +8,19 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +38,13 @@ import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.model.Product;
 import azaa.android.com.azaa.roomApi.database.DatabaseClient;
 import azaa.android.com.azaa.roomApi.entity.eProduct;
+import azaa.android.com.azaa.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static azaa.android.com.azaa.network.Config.IMAGE_URL;
 
-public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>{
+public class ItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<Product> itemsList = new ArrayList<>();
     Context context;
     LayoutInflater layoutInflater;
@@ -43,7 +55,7 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
     private String sellerPhone;
     private boolean isOpen = false;
     private ImageView popupImage;
-    private TextView itemtitle, itemPrice,itemDesc;
+    private TextView itemtitle, itemPrice, itemDesc;
 
     public ItemsAdapter(List<Product> itemsList, Context context) {
         this.itemsList = itemsList;
@@ -69,19 +81,30 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
 
-        MyHolder myHolder = (MyHolder)holder;
+        MyHolder myHolder = (MyHolder) holder;
         Product item = itemsList.get(position);
         myHolder.textName.setText(item.getProductName());
         myHolder.textPrice.setText(moneyFormatter(item.getProductPrice()));
 
         String imageUrl = IMAGE_URL + item.getProductImage();
+        StorageReference imageStorage = FirebaseStorage.getInstance().getReference().child(Constants.DATABASE_PATH_UPLOADS).child(item.getProductImage());
 
-        GlideApp.with(context)
-                .load(imageUrl)
-                .placeholder(R.drawable.placeholder)
-                .centerCrop()
-                .into(myHolder.imageView);
-
+        imageStorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                GlideApp.with(context)
+                        .load(uri.toString())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(14)))
+                        .into(myHolder.imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("Exception", exception.getMessage() + "PrintTrace: " + exception.getStackTrace());
+                // failed
+            }
+        });
 
     }
 
@@ -92,7 +115,8 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
         }
         return 0;
     }
-    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+
+    class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         @BindView(R.id.textItemTitle)
         TextView textName;
         @BindView(R.id.textItemPrice)
@@ -103,10 +127,11 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
         ImageView share;
         @BindView(R.id.textItemLike)
         ImageView likeItem;
+
         // create constructor to get widget reference
         public MyHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             imageView.setOnClickListener(this);
             share.setOnClickListener(this);
             imageView.setOnLongClickListener(this);
@@ -122,19 +147,19 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
             clickListener.onItemClick(getAdapterPosition(), v);
             Context context = v.getContext();
 
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.imageItemImage:
 
 
                     Intent intent = new Intent(context, openItem.class);
-                    intent.putExtra("name",current.getProductName());
-                    intent.putExtra("desc",current.getProductDescription());
-                    intent.putExtra("price",moneyFormatter(current.getProductPrice()));
-                    intent.putExtra("mail",current.getProductContacts());
-                    intent.putExtra("phone",current.getProductContacts());
-                    intent.putExtra("image",current.getProductImage());
-                    intent.putExtra("shop",current.getProductLocation());
-                    intent.putExtra("category",current.getProductType());
+                    intent.putExtra("name", current.getProductName());
+                    intent.putExtra("desc", current.getProductDescription());
+                    intent.putExtra("price", moneyFormatter(current.getProductPrice()));
+                    intent.putExtra("mail", current.getProductContacts());
+                    intent.putExtra("phone", current.getProductContacts());
+                    intent.putExtra("image", current.getProductImage());
+                    intent.putExtra("shop", current.getProductLocation());
+                    intent.putExtra("category", current.getProductType());
                     context.startActivity(intent);
 
                     break;
@@ -149,7 +174,7 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
 
                     Intent myIntent = new Intent(Intent.ACTION_SEND);
                     myIntent.setType("text/plain");
-                    String shareBody = "Checkout this product "+"From http://zedoo.000webhostapp.com/ura/";
+                    String shareBody = "Checkout this product " + "From http://zedoo.000webhostapp.com/ura/";
                     String shareSub = "Your Subject here";
                     myIntent.setType("image/*");
                     myIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(IMAGE_URL + current.getProductImage()));
@@ -159,31 +184,37 @@ public class ItemsAdapter extends RecyclerView.Adapter <RecyclerView.ViewHolder>
                     break;
                 case R.id.textItemLike:
                     updateStatus();
-                        isOpen = true;
-                        likeItem.setImageResource(R.drawable.cart_arrow_right);
-                        Toast.makeText(context, "Saved Succesfully", Toast.LENGTH_SHORT).show();
+                    isOpen = true;
+                    likeItem.setImageResource(R.drawable.cart_arrow_right);
+                    Toast.makeText(context, "Saved Succesfully", Toast.LENGTH_SHORT).show();
 
                     break;
             }
 
         }
+
         @Override
         public boolean onLongClick(View v) {
             return false;
         }
     }
+
     public void setOnItemClickListener(ItemsAdapter.ClickListener clickListener) {
         ItemsAdapter.clickListener = clickListener;
     }
+
     public interface ClickListener {
         void onItemClick(int position, View v);
+
         void onItemLongClick(int position, View v);
     }
-    public String moneyFormatter(String s){
-        String price = "Tsh "+String.format("%,.0f", Double.parseDouble(s));
+
+    public String moneyFormatter(String s) {
+        String price = "Tsh " + String.format("%,.0f", Double.parseDouble(s));
         return price;
     }
-    public void updateStatus(){
+
+    public void updateStatus() {
         class Tasks extends AsyncTask<Void, Void, Void> {
 
 
