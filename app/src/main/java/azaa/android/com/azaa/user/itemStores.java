@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import azaa.android.com.azaa.R;
-import azaa.android.com.azaa.activities.ProductUpload;
+import azaa.android.com.azaa.ui.activities.ProductUpload;
 import azaa.android.com.azaa.adapters.shopAdapter;
 import azaa.android.com.azaa.database.databaseOperations;
 import azaa.android.com.azaa.model.Product;

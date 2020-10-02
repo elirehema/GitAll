@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.activities;
+package azaa.android.com.azaa.ui.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,18 +24,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import azaa.android.com.azaa.R;
-import azaa.android.com.azaa.UpdateClasses.GooglePlayStoreAppVersionNameLoader;
-import azaa.android.com.azaa.UpdateClasses.WSCallerVersionListener;
-import azaa.android.com.azaa.activities.transformer.BackgroundToForegroundTransformer;
-import azaa.android.com.azaa.fragments.fragmentFour;
-import azaa.android.com.azaa.fragments.fragmentOne;
-import azaa.android.com.azaa.fragments.fragmentThree;
-import azaa.android.com.azaa.fragments.fragmentTwo;
+import azaa.android.com.azaa.firebase.FirebaseInstance;
+import azaa.android.com.azaa.ui.activities.transformer.BackgroundToForegroundTransformer;
+import azaa.android.com.azaa.ui.fragments.fragmentFour;
+import azaa.android.com.azaa.ui.fragments.fragmentOne;
+import azaa.android.com.azaa.ui.fragments.fragmentThree;
+import azaa.android.com.azaa.ui.fragments.fragmentTwo;
 import azaa.android.com.azaa.network.Config;
 import azaa.android.com.azaa.user.editProfile;
 import azaa.android.com.azaa.user.itemStores;
@@ -44,10 +44,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static azaa.android.com.azaa.network.Config.HELP_URL;
-import static azaa.android.com.azaa.network.Config.MY_PREFS_NAME;
 import static azaa.android.com.azaa.network.Config.TERMS_URL;
 
-public class MainActivity extends AppCompatActivity implements WSCallerVersionListener {
+public class MainActivity extends AppCompatActivity {
+    FirebaseAuth auth;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -77,19 +77,14 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        new GooglePlayStoreAppVersionNameLoader(getApplicationContext(), this).execute();
         configureNavigationDrawer();
         configureToolBar();
 
-        //MobileAds.initialize(this, AD_MOBI_APP_ID);
+        auth = FirebaseAuth.getInstance();
+        Log.d("AUTHENTICATION", String.valueOf(auth.getCurrentUser()));
 
 
-        if (savedInstanceState != null) {
-            //Restore the fragment's instance
-
-            //mContent = getSupportFragmentManager().getFragment(savedInstanceState, "myFragmentName");
-        }
+        if (savedInstanceState != null) {}
 
         toolbar.setNavigationIcon(R.drawable.dots_vertical);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -181,14 +176,6 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
         viewPager.setOffscreenPageLimit(4);
     }
 
-
-    @Override
-    public void onGetResponse(boolean isUpdateAvailable) {
-        Log.e("ResultAPPMAIN", String.valueOf(isUpdateAvailable));
-        if (isUpdateAvailable) {
-            showUpdateDialog();
-        }
-    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -282,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
             case android.R.id.home:
                 switch (isOpen) {
                     case 0:
-                        drawerLayout.openDrawer(Gravity.START);
+                        drawerLayout.openDrawer(GravityCompat.START);
                         toolbar.setNavigationIcon(R.drawable.arrow_left);
                         isOpen = 1;
                         break;
@@ -312,36 +299,6 @@ public class MainActivity extends AppCompatActivity implements WSCallerVersionLi
 
     }
 
-    private void logUser() {
-
-    }
-
-    /**
-     * Method to show update dialog
-     */
-    public void showUpdateDialog() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-
-        alertDialogBuilder.setTitle(MainActivity.this.getString(R.string.app_name));
-        alertDialogBuilder.setMessage(MainActivity.this.getString(R.string.update_message));
-        alertDialogBuilder.setCancelable(false);
-        alertDialogBuilder.setPositiveButton(R.string.update_now, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
-                dialog.cancel();
-            }
-        });
-        alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (isForceUpdate) {
-                    finish();
-                }
-                dialog.dismiss();
-            }
-        });
-        alertDialogBuilder.show();
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

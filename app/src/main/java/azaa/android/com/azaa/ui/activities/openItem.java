@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.activities;
+package azaa.android.com.azaa.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

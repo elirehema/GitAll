@@ -1,4 +1,5 @@
-package azaa.android.com.azaa.fragments;
+package azaa.android.com.azaa.ui.fragments;
+
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -20,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import azaa.android.com.azaa.adapters.Item;
-import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.adapters.ItemsAdapter;
+import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.asynctasks.backgroundAsync;
 import azaa.android.com.azaa.model.Product;
 import azaa.android.com.azaa.rest.ApiClient;
@@ -34,7 +35,7 @@ import retrofit2.Callback;
 import static azaa.android.com.azaa.network.constants.SPANCOUNT;
 
 @SuppressLint("ValidFragment")
-public class fragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class fragmentThree extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private List<Item> data = new ArrayList<>();
     private String id, title, contact, price, desc, image, email,type,location,t_Name;
     private ItemsAdapter itemsAdapter;
@@ -48,13 +49,13 @@ public class fragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
 
     List<Product> datalist;
 
+
     View view;
     private final String KEY_RECYCLER_STATE = "recycler_state";
     private RecyclerView mRecyclerView;
     private static Bundle mBundleRecyclerViewState;
 
-
-    public fragmentTwo() {
+    public fragmentThree() {
         super();
     }
 
@@ -66,6 +67,7 @@ public class fragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
             view = inflater.inflate(R.layout.fragment_one, container, false);
             ButterKnife.bind(this, view);
         }
+        progressBar.setProgress(0);
 
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_green_dark),
@@ -83,7 +85,6 @@ public class fragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
                 Log.d("MSG", "onItemClick position: " + position);
                 //Log.d("MSG", "onItemClick position: " + position + disaggrigationList.get(position).getDisag_value());
             }
-
             @Override
             public void onItemLongClick(int position, View v) {
                 Toast.makeText(getActivity(),"text",Toast.LENGTH_LONG).show();
@@ -94,24 +95,21 @@ public class fragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
+        // save RecyclerView state
         mBundleRecyclerViewState = new Bundle();
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
-
         if (mBundleRecyclerViewState != null && recyclerView != null) {
             Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
             if (recyclerView.getLayoutManager() != null) {
                 recyclerView.getLayoutManager().onRestoreInstanceState(listState);
             }
         }
-
     }
 
     @Override
@@ -119,35 +117,31 @@ public class fragmentTwo extends Fragment implements SwipeRefreshLayout.OnRefres
         new Handler().postDelayed(new Runnable() {
 
             @Override public void run() {
+
                 swipeLayout.setRefreshing(false);
             }
         }, 10000);
-
         getdaTa();
     }
+
     public void getdaTa(){
         progressBar.setVisibility(View.VISIBLE);
         ApiInterface apiInterface= ApiClient.getInstance().create(ApiInterface.class);
-        apiInterface.getAllWear("v").enqueue(new Callback<List<Product>>() {
+        apiInterface.getAllWear("j").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, retrofit2.Response<List<Product>> response) {
                 datalist = response.body();
-                //Log.d("TAG","Response = "+datalist);
 
                 List<Product> products = response.body();
                 recyclerView.setAdapter(new ItemsAdapter(products,getContext()));
                 progressBar.setVisibility(View.GONE);
-
             }
-
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
                 Log.d("TAG","Response = "+t.toString());
                 progressBar.setVisibility(View.GONE);
             }
         });
-
-        
     }
 
 }

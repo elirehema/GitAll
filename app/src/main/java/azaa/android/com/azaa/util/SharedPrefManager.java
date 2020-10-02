@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.firebase;
+package azaa.android.com.azaa.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;

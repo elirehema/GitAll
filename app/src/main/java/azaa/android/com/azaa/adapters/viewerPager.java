@@ -5,10 +5,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 
-import azaa.android.com.azaa.fragments.fragmentFour;
-import azaa.android.com.azaa.fragments.fragmentOne;
-import azaa.android.com.azaa.fragments.fragmentThree;
-import azaa.android.com.azaa.fragments.fragmentTwo;
+import azaa.android.com.azaa.ui.fragments.fragmentFour;
+import azaa.android.com.azaa.ui.fragments.fragmentOne;
+import azaa.android.com.azaa.ui.fragments.fragmentThree;
+import azaa.android.com.azaa.ui.fragments.fragmentTwo;
 
 
 public class viewerPager extends FragmentPagerAdapter {

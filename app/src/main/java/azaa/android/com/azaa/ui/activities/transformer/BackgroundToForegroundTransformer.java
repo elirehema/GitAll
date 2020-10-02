@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.activities.transformer;
+package azaa.android.com.azaa.ui.activities.transformer;
 
 
 /*

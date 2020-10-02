@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.activities;
+package azaa.android.com.azaa.ui.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -26,7 +26,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 
-public class welcome extends AppCompatActivity {
+public class WelcomeActitvity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
@@ -129,8 +129,7 @@ public class welcome extends AppCompatActivity {
 
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
-        startActivity(new Intent(welcome.this, MainActivity.class));
-        notifyLaunch();
+        startActivity(new Intent(WelcomeActitvity.this, SplashActivity.class));
         finish();
     }
 
@@ -212,21 +211,4 @@ public class welcome extends AppCompatActivity {
         }
     }
 
-    public void getVersionName() throws PackageManager.NameNotFoundException {
-        PackageInfo pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        int versionNumber = pinfo.versionCode;
-        String versionName = "V."+pinfo.versionName;
-
-        //TextView vers = findViewById(R.id.versionName);
-        //vers.setText(versionName);
-    }
-    public void setAnimation(){
-        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.clock_wise_rotation);
-        rotation.setRepeatCount(Animation.INFINITE);
-        image.startAnimation(rotation);
-    }
-
-    public void notifyLaunch(){
-
-    }
 }
