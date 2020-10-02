@@ -33,7 +33,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import azaa.android.com.azaa.activities.openItem;
+import azaa.android.com.azaa.ui.activities.openItem;
 import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.model.Product;
 import azaa.android.com.azaa.roomApi.database.DatabaseClient;

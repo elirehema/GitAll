@@ -1,21 +1,17 @@
-package azaa.android.com.azaa.activities;
+package azaa.android.com.azaa.ui.activities;
 
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -43,29 +39,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import azaa.android.com.azaa.adapters.MySingleton;
 import azaa.android.com.azaa.R;
 import azaa.android.com.azaa.model.Product;
-import azaa.android.com.azaa.roomApi.database.DatabaseClient;
-import azaa.android.com.azaa.roomApi.entity.eProduct;
 import azaa.android.com.azaa.util.Constants;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static azaa.android.com.azaa.network.Config.MY_PREFS_NAME;
-import static azaa.android.com.azaa.network.Config.UPLOAD_URL;
 
 
 public class ProductUpload extends Activity implements AdapterView.OnItemSelectedListener {

@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.activities;
+package azaa.android.com.azaa.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

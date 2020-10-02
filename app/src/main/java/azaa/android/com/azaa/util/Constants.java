@@ -20,4 +20,6 @@ public class Constants {
     public static final String DATABASE_PATH_USER_UPLOADS = "users_uploads";
 
     public static final String DATABASE_PATH_UPLOAD_CATEGORIES = "upload_categories";
+
+    public static final int RC_SIGN_IN = 1;
 }

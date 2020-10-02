@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import azaa.android.com.azaa.R;
-import azaa.android.com.azaa.activities.openItem;
+import azaa.android.com.azaa.ui.activities.openItem;
 import azaa.android.com.azaa.adapters.GlideApp;
 import azaa.android.com.azaa.roomApi.entity.eProduct;
 
