@@ -22,6 +22,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Gradle assemble release
+      run: ./gradlew assembleRelease
     - name: Build with Gradle
       run: ./gradlew build --debug
     - name: Android Github Action
