@@ -19,6 +19,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_person"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/transparent_edittext"/>
         <TextView
             android:id="@+id/s_name"
@@ -26,6 +28,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:layout_marginStart="@dimen/_sp_10"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/s_Image"
             android:text="@string/s_item_name"/>
         <TextView

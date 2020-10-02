@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_backarrow"
             android:tooltipText="Go back"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
         <TextView
             android:id="@+id/item_tittle"
@@ -27,12 +28,14 @@
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/back_arrow"
             android:textColor="#fff" />
         <TextView
             android:id="@+id/texPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/store_add"
             android:text="10000"
             android:gravity="center_vertical"
@@ -42,6 +45,7 @@
             android:id="@+id/store_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="@dimen/sp10"
             android:visibility="invisible"
