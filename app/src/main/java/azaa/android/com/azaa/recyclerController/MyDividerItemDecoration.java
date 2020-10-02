@@ -1,4 +1,4 @@
-package azaa.android.com.azaa.RecyclerController;
+package azaa.android.com.azaa.recyclerController;
 
 import android.content.Context;
 import android.content.res.Resources;
