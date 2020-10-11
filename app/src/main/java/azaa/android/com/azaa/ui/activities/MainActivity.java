@@ -251,6 +251,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_upload:
                         startActivity(new Intent(getApplicationContext(), ProductUpload.class));
                         break;
+                    case R.id.nav_logout:
+                        auth.signOut();
+                        startActivity(new Intent(getApplicationContext(), SplashActivity.class));
+                        break;
 
                 }
                 toolbar.setNavigationIcon(R.drawable.dots_vertical);
