@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,17 +39,17 @@ import butterknife.ButterKnife;
 import static azaa.android.com.azaa.network.constants.SPANCOUNT;
 
 @SuppressLint("ValidFragment")
-public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = "Fragment";
     private List<Item> data = new ArrayList<>();
-    private String id, title, contact, price, desc, image, email,type,location,t_Name;
+    private String id, title, contact, price, desc, image, email, type, location, t_Name;
     private ItemsAdapter itemsAdapter;
     @BindView(R.id.recyclerItems)
-        RecyclerView  recyclerView;
+    RecyclerView recyclerView;
     @BindView(R.id.progressBar3)
-        ProgressBar progressBar;
+    ProgressBar progressBar;
     @BindView(R.id.swipe_layout)
-        SwipeRefreshLayout swipeLayout;
+    SwipeRefreshLayout swipeLayout;
     backgroundAsync async;
 
     List<Product> datalist;
@@ -64,7 +65,6 @@ public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefres
     }
 
 
-
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
@@ -77,12 +77,12 @@ public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefres
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_green_dark),
                 getResources().getColor(android.R.color.holo_red_dark),
-                        getResources().getColor(android.R.color.holo_blue_dark),
-                                getResources().getColor(android.R.color.holo_orange_dark));
+                getResources().getColor(android.R.color.holo_blue_dark),
+                getResources().getColor(android.R.color.holo_orange_dark));
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPANCOUNT));
-        itemsAdapter = new ItemsAdapter(datalist,getContext());
+        itemsAdapter = new ItemsAdapter(datalist, getContext());
         recyclerView.setAdapter(itemsAdapter);
         itemsAdapter.setOnItemClickListener(new ItemsAdapter.ClickListener() {
             @Override
@@ -90,9 +90,10 @@ public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefres
                 Log.d("MSG", "onItemClick position: " + position);
                 //Log.d("MSG", "onItemClick position: " + position + disaggrigationList.get(position).getDisag_value());
             }
+
             @Override
             public void onItemLongClick(int position, View v) {
-                Toast.makeText(getActivity(),"text",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "text", Toast.LENGTH_LONG).show();
             }
         });
         getdaTa();
@@ -121,15 +122,16 @@ public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefres
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
 
-            @Override public void run() {
+            @Override
+            public void run() {
 
                 swipeLayout.setRefreshing(false);
             }
         }, 10000);
-       getdaTa();
+        getdaTa();
     }
 
-    public void getdaTa(){
+    public void getdaTa() {
         progressBar.setVisibility(View.VISIBLE);
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore.collection("products")
@@ -145,9 +147,9 @@ public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefres
                                 Product po = document.toObject(Product.class);
                                 products.add(po);
                                 Log.d(TAG, po.getProductPrice());
-                               // Log.d(TAG, document.getId() + " => " + document.getData());
+                                // Log.d(TAG, document.getId() + " => " + document.getData());
                             }
-                            recyclerView.setAdapter(new ItemsAdapter(products,getContext()));
+                            recyclerView.setAdapter(new ItemsAdapter(products, getContext()));
                             progressBar.setVisibility(View.GONE);
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -156,9 +158,10 @@ public class fragmentOne extends Fragment implements SwipeRefreshLayout.OnRefres
                 });
 
     }
-    public void excuteAsyc(){
+
+    public void excuteAsyc() {
         backgroundAsync async = new backgroundAsync(getContext());
-        Log.d("TAG","Background Async Started");
+        Log.d("TAG", "Background Async Started");
         async.execute();
 
     }

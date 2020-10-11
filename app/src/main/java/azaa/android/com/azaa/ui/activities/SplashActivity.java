@@ -21,11 +21,11 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // This method will be executed once the timer is over
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 Intent loggedInUserIntent = new Intent(SplashActivity.this, MainActivity.class);
                 Intent i = new Intent(SplashActivity.this, AuthenticationActivity.class);
 
-                if (!user.isAnonymous()){
+                if (firebaseUser != null){
                     startActivity(loggedInUserIntent);
                     finish();
                 }else {

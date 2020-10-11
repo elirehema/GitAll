@@ -60,4 +60,7 @@
     <string name="navigation_drawer_open">Drawer Opened</string>
     <string name="more">More</string>
 
+    <!-- Navigation Drawer Item -->
+    <string name="navigation_item_logout">Logout</string>
+
 </resources>
